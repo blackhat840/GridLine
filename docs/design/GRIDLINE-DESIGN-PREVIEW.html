@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" data-theme="lime">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gridline · Design Preview</title>
+<style>
+:root{color-scheme:dark;--accent:#ceff26;--shell:#0b1015;--panel:#141c23;--ink:#f4f6f8;--muted:#a3b3c2;--edge:#8195a9;--display:"Bahnschrift SemiCondensed","Arial Narrow",sans-serif}
+:root[data-theme="amber"]{--accent:#ffb441;--shell:#101112;--panel:#1d1c1a;--ink:#f6f0e4;--muted:#c0b3a4;--edge:#a2978b}
+:root[data-theme="blue"]{--accent:#4bcbff;--shell:#0a111a;--panel:#121d2a;--ink:#edf5ff;--muted:#a3b9cb;--edge:#859eb3}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#070a0e;color:var(--ink);font:16px "Segoe UI",sans-serif}
+button,select{font:inherit}
+button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.preview-controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding:9px max(16px,3vw);min-height:48px;border-bottom:1px solid #27323e;background:#101720}
+.preview-controls strong{letter-spacing:.045em}
+.preview-controls label{display:inline-flex;align-items:center;gap:8px;color:#d7e2ec}
+.preview-controls select{padding:4px 8px;border:1px solid #556575;border-radius:4px;background:#141d28;color:#f4f6f8}
+.preview-controls div{display:flex;flex-wrap:wrap;gap:8px 18px}
+.preview-frame{position:relative;margin:0 auto;overflow:hidden}
+.stage{position:absolute;inset:0 auto auto 0;width:1600px;height:900px;transform-origin:top left;isolation:isolate;overflow:hidden;background:var(--shell);color:var(--ink)}
+.stage-header{position:absolute;inset:0 0 auto;height:88px;background:var(--shell);z-index:5}
+.wordmark{position:absolute;left:41px;top:8px;font-family:var(--display)}
+.wordmark strong{display:block;font-size:45px;line-height:1.04;font-weight:900;font-style:italic;letter-spacing:-.025em}
+.wordmark b{color:var(--accent);letter-spacing:-.1em;margin-left:6px}
+.wordmark small{display:block;margin-top:3px;font:600 15px/1.2 "Segoe UI",sans-serif;letter-spacing:.27em}
+.nav-tabs{position:absolute;left:430px;top:14px;height:48px;display:grid;grid-template-columns:repeat(3,184px);gap:14px}
+.nav-tab{display:grid;place-items:center;width:184px;height:48px;border:0;padding:0 14px;background:none;color:var(--ink);font:900 italic 29px/1 var(--display);text-transform:uppercase}
+button.nav-tab{cursor:pointer}
+.nav-tab[aria-current="page"]{clip-path:polygon(13% 0,100% 0,87% 100%,0 100%);background:var(--accent);color:#101417}
+.nav-tab:focus-visible{outline-offset:-6px}
+.rig{position:absolute;top:18px;right:35px;height:43px;display:flex;align-items:center;gap:14px;font:800 24px/1 var(--display)}
+.rig svg{width:35px;height:35px;fill:none;stroke:currentColor;stroke-width:1.8}
+.divider{position:absolute;left:0;width:100%;height:24px;color:var(--accent);overflow:hidden;pointer-events:none}
+.divider polyline{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.header-divider{top:69px}
+.stage-footer{position:absolute;inset:auto 0 0;height:73px;padding:17px 42px 0;background:var(--shell);display:flex;align-items:center;gap:19px;z-index:5}
+.footer-divider{top:0}
+.footer-hint{display:inline-flex;align-items:center;gap:11px;font:700 17px/1 "Segoe UI",sans-serif;letter-spacing:.025em}
+.footer-hint[hidden]{display:none}
+.footer-hint+.footer-hint{border-left:1px solid var(--edge);padding-left:19px}
+.footer-hint kbd{display:grid;place-items:center;min-width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;font:800 15px/1 "Segoe UI",sans-serif}
+.footer-hint kbd.wide{border-radius:6px;padding:0 5px}
+.screen{position:absolute;inset:88px 0 73px;overflow:hidden}
+.screen[hidden]{display:none}
+.art{display:block;width:100%;height:100%;overflow:hidden}
+.display{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase}
+.action{display:inline-grid;place-items:center;min-height:61px;padding:0 28px;background:var(--accent);color:#101417;font-size:29px;text-align:center;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%)}
+.action.secondary{position:relative;isolation:isolate;color:var(--ink);background:var(--edge)}
+.action.secondary::before{content:"";position:absolute;inset:2px;clip-path:inherit;background:var(--shell);z-index:-1}
+.action-row{display:flex;gap:16px}
+.tag{display:inline-flex;align-items:center;padding:5px 14px;border:1px solid var(--edge);color:var(--muted);font-size:19px;letter-spacing:.035em}
+.slash{color:var(--accent);font-style:italic;margin-right:12px}
+h1,h2,p{margin:0}
+.hero-art{position:absolute;inset:0 0 auto auto;z-index:-1}
+.hero-art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--shell),transparent 23%),linear-gradient(0deg,var(--shell),transparent 19%)}
+.home .hero-art{width:1010px;height:580px}
+.home-copy{position:absolute;left:52px;top:58px}
+.home-copy h1{margin:19px 0 29px;font-size:77px;line-height:.98;letter-spacing:-.022em}
+.home-copy .action{min-width:255px}
+.home-sims{position:absolute;inset:auto 35px 28px;height:211px}
+.home-sims h2{display:flex;align-items:center;gap:18px;margin:0 0 11px 12px;font-size:29px}
+.home-sims h2::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--edge),transparent)}
+.tiles{display:grid;gap:12px}
+.home .tiles{grid-template-columns:repeat(4,minmax(0,1fr));height:163px}
+.tile{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--edge);--shape:polygon(0 5%,3% 0,100% 0,100% 95%,97% 100%,0 100%);clip-path:var(--shape);padding:1px}
+.home .tile{--shape:polygon(5% 0,100% 0,95% 100%,0 100%)}
+.tile.selected{padding:4px;background:var(--accent)}
+.tile-inner{position:relative;width:100%;height:100%;overflow:hidden;clip-path:var(--shape);background:var(--panel)}
+.tile-inner::after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#05070a 89%)}
+.tile-caption{position:absolute;z-index:1;bottom:12px;left:19px;right:10px;font-size:29px;line-height:1;white-space:nowrap}
+.home .tile-caption{left:27px}
+.library{padding:24px 28px 28px;display:grid;grid-template-columns:minmax(0,1fr) 443px;gap:17px}
+.library-browse{display:grid;grid-template-rows:76px 50px minmax(0,1fr);gap:12px;min-width:0}
+.library h1,.quick-race h1{font-size:68px;line-height:1;letter-spacing:-.015em}
+.filters{display:flex;gap:13px;align-items:start}
+.filter{min-width:137px;padding:8px 16px;text-align:center;color:var(--ink);border:1px solid var(--edge);font-size:22px;transform:skewX(-12deg)}
+.filter.selected{background:var(--accent);border-color:var(--accent);color:#101417}
+.filter span{display:block;transform:skewX(12deg)}
+.library .tiles{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+.library .tile-caption{font-size:26px;left:14px}
+.game-detail{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:15px;border:1px solid var(--edge);background:var(--panel);overflow:hidden;padding:26px;isolation:isolate}
+.game-detail .hero-art{width:100%;height:74%}
+.game-detail .hero-art::after{background:linear-gradient(0deg,var(--panel),transparent 40%)}
+.game-detail h2{font-size:41px;line-height:1;white-space:nowrap}
+.game-detail .tag{align-self:start}
+.quick-race .hero-art{width:1003px;height:100%}
+.quick-race .hero-art::after{background:linear-gradient(90deg,var(--shell),transparent 21%)}
+.race-copy{position:absolute;left:44px;top:26px;width:564px}
+.crumb{margin-bottom:23px;color:var(--muted);font-size:20px;letter-spacing:.06em}
+.race-copy h1{font-size:79px;margin-bottom:9px}
+.race-subtitle{display:flex;align-items:center;gap:18px;margin:0 0 25px 8px;font-size:24px}
+.race-subtitle .tag{color:var(--accent);border-color:var(--accent);font-size:15px}
+.fields{margin:0 0 25px;display:grid;gap:8px}
+.fields div{display:grid;grid-template-columns:38% 62%;align-items:center;min-height:58px;padding:0 20px;border:1px solid var(--edge);background:var(--panel)}
+.fields dt{font:800 italic 22px/1 var(--display);color:var(--muted)}
+.fields dd{margin:0;font:700 23px/1.1 "Segoe UI",sans-serif}
+.race-copy .action{width:100%;min-height:80px;font-size:37px}
+</style>
+</head>
+<body>
+<div class="preview-controls" aria-label="Design preview controls">
+  <strong>Gridline design preview</strong>
+  <div>
+    <label>Screen
+      <select id="screen-picker">
+        <option value="home">Home</option>
+        <option value="library">Library</option>
+        <option value="quick-race">Quick Race</option>
+      </select>
+    </label>
+    <label>Color scheme
+      <select id="theme-picker">
+        <option value="lime">Acid Lime</option>
+        <option value="amber">Signal Amber</option>
+        <option value="blue">Ice Blue</option>
+      </select>
+    </label>
+  </div>
+</div>
+<div class="preview-frame">
+  <div class="stage" aria-label="Gridline launcher mockup">
+    <header class="stage-header">
+      <div class="wordmark"><strong>GRIDLINE<b> //</b></strong><small>SIM RACING LAUNCHER</small></div>
+      <nav class="nav-tabs" aria-label="Launcher navigation">
+        <button class="nav-tab" type="button" data-page="home" aria-current="page">Play</button>
+        <button class="nav-tab" type="button" data-page="library">Library</button>
+        <span class="nav-tab">Settings</span>
+      </nav>
+      <div class="rig">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13"/><path d="M4 14h24M11 27l2-9h6l2 9"/><circle cx="16" cy="15" r="2"/></svg>
+        <span>RIG 01</span>
+      </div>
+      <svg class="divider header-divider" viewBox="0 0 1600 24" aria-hidden="true">
+        <polyline points="0,15 338,15 356,1 1600,1"/>
+      </svg>
+    </header>
+
+    <main>
+      <section id="home" class="screen home" aria-label="Home">
+        <div class="hero-art" data-art="home" data-crop="726 73 946 564"></div>
+        <div class="home-copy">
+          <p class="tag display">GT Racing</p>
+          <h1 class="display">Assetto Corsa<br>Competizione</h1>
+          <div class="action-row">
+            <span class="action display">Play Game</span>
+            <span class="action secondary display">Game Details</span>
+          </div>
+        </div>
+        <div class="home-sims">
+          <h2 class="display">Select a Sim</h2>
+          <div class="tiles" id="home-tiles"></div>
+        </div>
+      </section>
+
+      <section id="library" class="screen library" aria-label="Library" hidden>
+        <div class="library-browse">
+          <h1 class="display"><span class="slash">/</span>Game Library</h1>
+          <div class="filters display" aria-label="Game categories">
+            <span class="filter selected"><span>All Sims</span></span>
+            <span class="filter"><span>Circuit</span></span>
+            <span class="filter"><span>Rally</span></span>
+            <span class="filter"><span>Arcade</span></span>
+          </div>
+          <div class="tiles" id="library-tiles"></div>
+        </div>
+        <aside class="game-detail" aria-label="Selected game">
+          <div class="hero-art" data-art="library" data-crop="1180 115 472 461"></div>
+          <h2 class="display"><span class="slash">/</span>EA SPORTS WRC</h2>
+          <p class="tag display">Installed</p>
+          <span class="action display">Play Game</span>
+        </aside>
+      </section>
+
+      <section id="quick-race" class="screen quick-race" aria-label="Quick Race" hidden>
+        <div class="hero-art" data-art="race" data-crop="655 107 1017 754"></div>
+        <div class="race-copy">
+          <p class="crumb display">Play <span class="slash">/</span> Session</p>
+          <h1 class="display"><span class="slash">/</span>Quick Race</h1>
+          <p class="race-subtitle display">Assetto Corsa <span class="tag">Preset Available</span></p>
+          <dl class="fields">
+            <div><dt>Car</dt><dd>Mazda MX-5 Cup</dd></div>
+            <div><dt>Track</dt><dd>Brands Hatch Indy</dd></div>
+            <div><dt>Mode</dt><dd>Practice</dd></div>
+            <div><dt>Preset</dt><dd>First Lap</dd></div>
+          </dl>
+          <span class="action display">Start Session &nbsp; ›</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="stage-footer" aria-label="Controller hints">
+      <svg class="divider footer-divider" viewBox="0 0 1600 24" aria-hidden="true">
+        <polyline points="0,1 1250,1 1268,15 1600,15"/>
+      </svg>
+      <div class="footer-hint"><kbd>A</kbd> SELECT</div>
+      <div class="footer-hint"><kbd>B</kbd> BACK</div>
+      <div class="footer-hint" data-hint="library"><kbd class="wide">LB / RB</kbd> CHANGE FILTER</div>
+      <div class="footer-hint" data-hint="library"><kbd>Y</kbd> GAME DETAILS</div>
+    </footer>
+  </div>
+</div>
+<script>
+const sources = {
+  home: "mockups/Gridline Sim Racing Launcher.png",
+  library: "mockups/Gridline sim racing library.png",
+  race: "mockups/Quick race session at Brands Hatch.png"
+};
+
+function artwork(source, crop) {
+  return `<svg class="art" viewBox="${crop}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="${sources[source]}" width="1672" height="941"/></svg>`;
+}
+
+function tiles(source, entries, selected) {
+  return entries.map(([name, crop], index) => `
+    <div class="tile${index === selected ? " selected" : ""}">
+      <div class="tile-inner">${artwork(source, crop)}
+        <p class="tile-caption display">${name}</p>
+      </div>
+    </div>`).join("");
+}
+
+for (const panel of document.querySelectorAll("[data-art]")) {
+  panel.innerHTML = artwork(panel.dataset.art, panel.dataset.crop);
+}
+
+document.querySelector("#home-tiles").innerHTML = tiles("home", [
+  ["ACC", "48 657 367 122"],
+  ["Assetto Corsa", "461 659 342 120"],
+  ["EA SPORTS WRC", "858 658 345 121"],
+  ["Automobilista 2", "1253 659 376 120"]
+], 0);
+
+document.querySelector("#library-tiles").innerHTML = tiles("library", [
+  ["ACC", "18 300 371 199"],
+  ["Assetto Corsa", "405 300 365 199"],
+  ["EA SPORTS WRC", "795 300 350 199"],
+  ["Automobilista 2", "18 575 371 194"],
+  ["BeamNG.drive", "406 575 364 194"],
+  ["RaceRoom", "792 575 355 194"]
+], 2);
+
+const screenPicker = document.querySelector("#screen-picker");
+const themePicker = document.querySelector("#theme-picker");
+const previewFrame = document.querySelector(".preview-frame");
+const stage = document.querySelector(".stage");
+const controls = document.querySelector(".preview-controls");
+
+function showScreen(name) {
+  screenPicker.value = name;
+  for (const screen of document.querySelectorAll(".screen")) screen.hidden = screen.id !== name;
+  const activeTab = name === "library" ? "library" : "home";
+  for (const tab of document.querySelectorAll("[data-page]")) {
+    if (tab.dataset.page === activeTab) tab.setAttribute("aria-current", "page");
+    else tab.removeAttribute("aria-current");
+  }
+  for (const hint of document.querySelectorAll("[data-hint]")) hint.hidden = hint.dataset.hint !== name;
+}
+
+function fitPreview() {
+  const scale = Math.min(window.innerWidth / 1600, Math.max(320, window.innerHeight - controls.offsetHeight) / 900);
+  previewFrame.style.width = `${1600 * scale}px`;
+  previewFrame.style.height = `${900 * scale}px`;
+  stage.style.transform = `scale(${scale})`;
+}
+
+screenPicker.addEventListener("change", () => showScreen(screenPicker.value));
+themePicker.addEventListener("change", () => { document.documentElement.dataset.theme = themePicker.value; });
+for (const tab of document.querySelectorAll("[data-page]")) {
+  tab.addEventListener("click", () => showScreen(tab.dataset.page));
+}
+
+window.addEventListener("resize", fitPreview);
+showScreen(screenPicker.value);
+fitPreview();
+</script>
+</body>
+</html>

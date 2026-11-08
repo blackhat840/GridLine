@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174 43" role="img" aria-labelledby="title">
+  <title id="title">GridLine Sim Launcher</title>
+  <path fill="#ceff26" d="M9 5H31L27 10H12L6 22H20L23 17H14L17 12H31L23 27H0Z"/>
+  <path fill="#f4f6f8" fill-rule="evenodd" d="M34,5 L51,5 L53.4,9 L51.4,14 L45.8,18 L47.2,27 L40.7,27 L39.4,19 L33.9,19 L30.7,27 L25.2,27 Z M37.5,10 L46.5,10 L47.1,11 L46.3,13 L44.9,14 L35.9,14 Z
+    M59,5 L64.5,5 L55.7,27 L50.2,27 Z
+    M68,5 L85,5 L88,10 L83.2,22 L76.2,27 L59.2,27 Z M71.5,10 L80.5,10 L81.7,12 L78.5,20 L75.7,22 L66.7,22 Z
+    M94,5 L99.5,5 L92.7,22 L106.2,22 L102.7,27 L85.2,27 Z
+    M116,5 L121.5,5 L112.7,27 L107.2,27 Z
+    M125,5 L130.5,5 L135.6,18.5 L141,5 L146.5,5 L137.7,27 L132.2,27 L127.1,13.5 L121.7,27 L116.2,27 Z
+    M150,5 L170,5 L166.5,10 L153.5,10 L152.1,13.5 L164.1,13.5 L160.6,18.5 L150.1,18.5 L148.7,22 L163.2,22 L159.7,27 L141.2,27 Z"/>
+  <text x="1" y="38" fill="#a2b3c4" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" letter-spacing="2">SIM LAUNCHER</text>
+</svg>
